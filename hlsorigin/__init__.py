@@ -72,14 +72,15 @@ class Manipulator:
         st = ''
         for s in sorted(segments.keys()):
             seg = segments[s]
-            res = re.match('master\d+_(\d+).ts', seg.uri)
-            if res:
-                seqnum = int(res.group(1))
-            if lastseqnum != 0 and lastseqnum != seqnum-1:
-                st += "#EXT-X-DISCONTINUITY\n"
-            st += "#EXTINF:%s\n" % seg.duration
-            st += "%s\n" % seg.uri
-            lastseqnum = seqnum
+            if not seg.scte35:
+                res = re.match('master\d+_(\d+).ts', seg.uri)
+                if res:
+                    seqnum = int(res.group(1))
+                if lastseqnum != 0 and lastseqnum != seqnum-1:
+                    st += "#EXT-X-DISCONTINUITY\n"
+                st += "#EXTINF:%s\n" % seg.duration
+                st += "%s\n" % seg.uri
+                lastseqnum = seqnum
         return st
 
     def playlistFromStartTimestamp(self, startts):
