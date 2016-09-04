@@ -14,6 +14,7 @@ def main():
     parser.add_argument('--in', dest='ints', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--out', dest='outts', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--mediaplaylist', dest='mediaplaylist', default=None, help="name of media playlist, e.g: master800.m3u8")
+    parser.add_argument('--removecueout', dest='removecueout', default=True, help="remove cue out periods (ads) segments")
     parser.add_argument('--debug', dest='debug', action='store_true', default=False, help='Write debug info to stderr')
     args = parser.parse_args()
     debug.doDebug = args.debug
@@ -25,7 +26,7 @@ def main():
         raise Exception("Invalid out timestamp") 
     manifests = ManifestList(args.mediaplaylist, args.hlsdir)
     manipulator = Manipulator(manifests)
-    print manipulator.vodFromLive(args.ints, args.outts)
+    print manipulator.vodFromLive(args.ints, args.outts, args.removecueout)
     
 if __name__ == '__main__':
     try:

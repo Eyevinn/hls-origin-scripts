@@ -98,7 +98,7 @@ class Manipulator:
         s += self._buildPlaylist(playlistlist, False)
         return s
   
-    def vodFromLive(self, ints, outts):
+    def vodFromLive(self, ints, outts, removecueout):
         playlistlist = []
         unixInTS = datetime.datetime.strptime(ints, "%Y-%m-%d %H:%M:%S").strftime("%s")
         unixOutTS = datetime.datetime.strptime(outts, "%Y-%m-%d %H:%M:%S").strftime("%s")
@@ -112,7 +112,7 @@ class Manipulator:
         s += "#EXT-X-PLAYLIST-TYPE:VOD\n"
         s += "#EXT-X-VERSION:3\n"
         s += "#EXT-X-TARGETDURATION:10\n"
-        s += self._buildPlaylist(playlistlist, True)
+        s += self._buildPlaylist(playlistlist, removecueout)
         s += "#EXT-X-ENDLIST\n"
         return s
  
