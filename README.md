@@ -25,6 +25,10 @@ From source
 	cd hls-origin-scripts
 	python setup.py install
 	
+From Python Package Index
+
+	pip install hlsorigin
+	
 # Usage
 
 These scripts are executed by the request handler at the origin webserver. The scripts output the generated manifest file to stdout
