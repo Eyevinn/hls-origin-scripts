@@ -56,3 +56,9 @@ Available options:
 ## hls-live-from-vod
 
 TBD
+
+# Contribution
+We welcome contributions to this project. Just follow the normal procedures by forking this repository, create a topic branch for your fix and then submit a pull request.
+
+# License
+See LICENSE for details
