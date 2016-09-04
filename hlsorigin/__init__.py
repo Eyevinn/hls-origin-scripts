@@ -6,6 +6,7 @@
 import os
 import datetime
 import m3u8
+import re
 
 class ManifestList:
     def __init__(self, mediaplaylist, hlsdir):
@@ -22,7 +23,7 @@ class ManifestList:
             res = re.match('%s-(.*)$' % self.mediaplaylist, filename)
             if res:            
                 manifest = ( res.group(1), filename )
-            self.manifests.append(manifest)        
+                self.manifests.append(manifest)        
 
     def getManifests(self):
         self._collectAllMediaplaylists()
@@ -57,12 +58,12 @@ class Manipulator:
                 if not incue:
                     incue = True
                 else:
-                    st += "#EXT-X-CUE-OUT-CONT:Duration=%s,SCTE35=%s" % (seg.scte35_duration, seg.scte35)
+                    st += "#EXT-X-CUE-OUT-CONT:Duration=%s,SCTE35=%s\n" % (seg.scte35_duration, seg.scte35)
             else:
                 if incue:
                     incue = False
-                    st += "#EXT-C-CUE-IN"
-            st += "#EXTINF:%s" % seg.duration
+                    st += "#EXT-C-CUE-IN\n"
+            st += "#EXTINF:%s\n" % seg.duration
             st += seg.uri
         return st
 
@@ -74,8 +75,8 @@ class Manipulator:
             if res:
                 seqnum = int(res.group(1))
             if lastseqnum != 0 and lastseqnum != seqnum-1:
-                st += "#EXT-X-DISCONTINUITY"
-            st += "#EXTINF:%s" % segments[s]
+                st += "#EXT-X-DISCONTINUITY\n"
+            st += "#EXTINF:%s\n" % segments[s]
             st += s
             lastseqnum = seqnum
         return st
@@ -88,10 +89,10 @@ class Manipulator:
             if ts >= unixStartTS:
                 playlistlist.append(filename)
         s = ''
-        s += "#EXTM3U"
-        s += "#EXT-X-VERSION:3"
-        s += "#EXT-X-TARGETDURATION:10"
-        s += "#EXT-X-START:TIME-OFFSET=0"
+        s += "#EXTM3U\n"
+        s += "#EXT-X-VERSION:3\n"
+        s += "#EXT-X-TARGETDURATION:10\n"
+        s += "#EXT-X-START:TIME-OFFSET=0\n"
         s += self._buildPlaylist(playlistlist, False)
         return s
   
@@ -105,10 +106,10 @@ class Manipulator:
             if ts >= unixInTS and ts <= unixOutTS:
                 playlistlist.append(filename)
         s = ''
-        s += "#EXTM3U"
-        s += "#EXT-X-PLAYLIST-TYPE:VOD"
-        s += "#EXT-X-VERSION:3"
-        s += "#EXT-X-TARGETDURATION:10"
+        s += "#EXTM3U\n"
+        s += "#EXT-X-PLAYLIST-TYPE:VOD\n"
+        s += "#EXT-X-VERSION:3\n"
+        s += "#EXT-X-TARGETDURATION:10\n"
         s += self._buildPlaylist(playlistlist, True)
-        s += "#EXT-X-ENDLIST"
+        s += "#EXT-X-ENDLIST\n"
  
