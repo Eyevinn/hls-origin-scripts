@@ -27,7 +27,8 @@ setup(
     packages = ['hlsorigin' ],
     entry_points = {
         'console_scripts': [
-            'hls-startover=hlsorigin.startover:main'
+            'hls-startover=hlsorigin.startover:main',
+            'hls-capture=hlsorigin.capture:main'
         ]
     }
 )
