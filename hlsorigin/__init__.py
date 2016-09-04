@@ -64,7 +64,7 @@ class Manipulator:
                     incue = False
                     st += "#EXT-C-CUE-IN\n"
             st += "#EXTINF:%s\n" % seg.duration
-            st += seg.uri
+            st += "%s\n" % seg.uri
         return st
 
     def _buildSegmentlistCueout(self, segments):
@@ -77,7 +77,7 @@ class Manipulator:
             if lastseqnum != 0 and lastseqnum != seqnum-1:
                 st += "#EXT-X-DISCONTINUITY\n"
             st += "#EXTINF:%s\n" % segments[s]
-            st += s
+            st += "%s\n" % s
             lastseqnum = seqnum
         return st
 
