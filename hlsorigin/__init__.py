@@ -71,13 +71,14 @@ class Manipulator:
         lastseqnum = 0
         st = ''
         for s in sorted(segments.keys()):
-            res = re.match('master\d+_(\d+).ts', s)
+            seg = segments[s]
+            res = re.match('master\d+_(\d+).ts', seg.uri)
             if res:
                 seqnum = int(res.group(1))
             if lastseqnum != 0 and lastseqnum != seqnum-1:
                 st += "#EXT-X-DISCONTINUITY\n"
-            st += "#EXTINF:%s\n" % segments[s]
-            st += "%s\n" % s
+            st += "#EXTINF:%s\n" % seg.duration
+            st += "%s\n" % seg.uri
             lastseqnum = seqnum
         return st
 
@@ -112,4 +113,5 @@ class Manipulator:
         s += "#EXT-X-TARGETDURATION:10\n"
         s += self._buildPlaylist(playlistlist, True)
         s += "#EXT-X-ENDLIST\n"
+        return s
  
