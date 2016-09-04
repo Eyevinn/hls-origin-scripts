@@ -83,7 +83,7 @@ class Manipulator:
     def playlistFromStartTimestamp(self, startts):
         playlistlist = []
         unixStartTS = datetime.datetime.strptime(startts, "%Y-%m-%d %H:%M:%S").strftime("%s")
-        for m in self.manifestlist:
+        for m in self.manifestlist.getSortedManifests():
             ts, filename = m
             if ts >= unixStartTS:
                 playlistlist.append(filename)
@@ -100,7 +100,7 @@ class Manipulator:
         unixInTS = datetime.datetime.strptime(ints, "%Y-%m-%d %H:%M:%S").strftime("%s")
         unixOutTS = datetime.datetime.strptime(outts, "%Y-%m-%d %H:%M:%S").strftime("%s")
 
-        for m in self.manifestlist:
+        for m in self.manifestlist.getSortedManifests():
             ts, filename = m
             if ts >= unixInTS and ts <= unixOutTS:
                 playlistlist.append(filename)
