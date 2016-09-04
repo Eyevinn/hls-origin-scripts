@@ -14,7 +14,7 @@ def main():
     parser.add_argument('--in', dest='ints', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--out', dest='outts', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--mediaplaylist', dest='mediaplaylist', default=None, help="name of media playlist, e.g: master800.m3u8")
-    parser.add_argument('--noremovecueout', dest='noremovecueout', action='store_true', default=False, help="remove cue out periods (ads) segments")
+    parser.add_argument('--noremovecueout', dest='noremovecueout', action='store_true', default=False, help="do not remove segments in cue out periods")
     parser.add_argument('--debug', dest='debug', action='store_true', default=False, help='Write debug info to stderr')
     args = parser.parse_args()
     debug.doDebug = args.debug
