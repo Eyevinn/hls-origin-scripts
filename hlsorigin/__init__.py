@@ -76,6 +76,10 @@ class Manipulator:
                 res = re.match('master\d+_(\d+).ts', seg.uri)
                 if res:
                     seqnum = int(res.group(1))
+                else:
+                    res2 = re.match('.*-master\d+-(\d+)/(\d+).ts', seg.uri)
+                    if res2:
+                        seqnum = int(res2.group(1)+res2.group(2))
                 if lastseqnum != 0 and lastseqnum != seqnum-1:
                     st += "#EXT-X-DISCONTINUITY\n"
                 st += "#EXTINF:%s\n" % seg.duration
