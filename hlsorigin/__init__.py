@@ -72,7 +72,7 @@ class Manipulator:
         st = ''
         for s in sorted(segments.keys()):
             seg = segments[s]
-            if not seg.scte35:
+            if not seg.cue_out:
                 res = re.match('master\d+_(\d+).ts', seg.uri)
                 if res:
                     seqnum = int(res.group(1))
