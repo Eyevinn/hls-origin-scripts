@@ -16,7 +16,7 @@ install_reqs = [req for req in open(abspath(join(dirname(__file__), 'requirement
 
 setup(
     name = "hlsorigin",
-    version = "0.0.4",
+    version = "0.0.6",
     author = "Jonas Birme",
     author_email = "jonas.birme@eyevinn.se",
     description = "Command line tools for HLS manipulation at origin or edge server",
