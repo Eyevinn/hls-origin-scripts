@@ -14,6 +14,7 @@ def main():
     parser.add_argument('hlsdir', metavar='HLSDIR', default=None, help="path to directory where HLS files are being archived")
     parser.add_argument('--startover', dest='startover', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--mediaplaylist', dest='mediaplaylist', default=None, help="name of media playlist, e.g: master800.m3u8")
+    parser.add_argument('--lstfile', dest='lstfile', default=None, help="Use LST file to collect all media playlists")
     parser.add_argument('--debug', dest='debug', action='store_true', default=False, help='Write debug info to stderr')
     args = parser.parse_args()
     debug.doDebug = args.debug
@@ -23,7 +24,7 @@ def main():
         raise Exception("Invalid timestamp") 
     if not args.mediaplaylist: 
         raise Exception("Media playlist not specified")
-    manifests = ManifestList(args.mediaplaylist, args.hlsdir)
+    manifests = ManifestList(args.mediaplaylist, args.hlsdir, args.lstfile)
     manipulator = Manipulator(manifests)
     print manipulator.playlistFromStartTimestamp(args.startover)
 

@@ -9,17 +9,25 @@ import m3u8
 import re
 
 class ManifestList:
-    def __init__(self, mediaplaylist, hlsdir):
+    def __init__(self, mediaplaylist, hlsdir, lstfile=None):
         self.mediaplaylist = mediaplaylist
         self.hlsdir = hlsdir
+        self.lstfile = lstfile
 
     def getHlsdir(self):
         return self.hlsdir
 
     def _collectAllMediaplaylists(self):
         self.manifests = []
-        filenames = os.listdir(self.hlsdir)
+        filenames = []
+        if self.lstfile:
+            filenames = [line.rstrip('\n') for line in open(self.lstfile)]
+        else:
+            filenames = os.listdir(self.hlsdir)
         for filename in filenames:
+            m = re.match('^.*/(.*)$', filename)
+            if m:
+                filename = m.group(1)
             res = re.match('%s-(.*)$' % self.mediaplaylist, filename)
             if res:            
                 manifest = ( res.group(1), filename )
