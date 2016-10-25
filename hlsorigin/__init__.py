@@ -47,6 +47,8 @@ class Manipulator:
     def _buildPlaylist(self, playlistlist, handlecueout):
         segments = {}
         for f in playlistlist:
+            if not os.path.isfile('%s/%s' % (self.manifestlist.getHlsdir(), f)):
+                continue
             m3u8_obj = m3u8.load('%s/%s' % (self.manifestlist.getHlsdir(), f))
             for seg in m3u8_obj.segments:
                 segments[seg.uri] = seg
