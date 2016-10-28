@@ -83,7 +83,7 @@ class Manipulator:
         for s in sorted(segments.keys()):
             seg = segments[s]
             if not seg.cue_out:
-                res = re.match('master\d+_(\d+).ts', seg.uri)
+                res = re.match('.*/master\d+_(\d+).ts', seg.uri)
                 if res:
                     seqnum = int(res.group(1))
                 else:
