@@ -14,17 +14,20 @@ def main():
     parser.add_argument('--in', dest='ints', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--out', dest='outts', default=None, help="YYYY-mm-dd HH:MM:SS")
     parser.add_argument('--mediaplaylist', dest='mediaplaylist', default=None, help="name of media playlist, e.g: master800.m3u8")
+    parser.add_argument('--lstfile', dest='lstfile', default=None, help="Use LST file to collect all media playlists")
     parser.add_argument('--noremovecueout', dest='noremovecueout', action='store_true', default=False, help="do not remove segments in cue out periods")
     parser.add_argument('--debug', dest='debug', action='store_true', default=False, help='Write debug info to stderr')
     args = parser.parse_args()
     debug.doDebug = args.debug
 
     debug.log("Generating media playlist for %s%s-* from %s to %s" % (args.hlsdir, args.mediaplaylist, args.ints, args.outts))    
+    if args.lstfile:
+        debug.log("Using LST file: %s" % args.lstfile)
     if not util.isValidTimestamp(args.ints):
         raise Exception("Invalid in timestamp") 
     if not util.isValidTimestamp(args.outts):
         raise Exception("Invalid out timestamp") 
-    manifests = ManifestList(args.mediaplaylist, args.hlsdir)
+    manifests = ManifestList(args.mediaplaylist, args.hlsdir, args.lstfile)
     manipulator = Manipulator(manifests)
     print manipulator.vodFromLive(args.ints, args.outts, not args.noremovecueout)
     
