@@ -8,6 +8,12 @@ import datetime
 import m3u8
 import re
 
+def SEGMENTNO(uri):
+    m = re.match('.*\D(\d+)\.ts$', uri)
+    if m:
+        return m.group(1)
+    return uri
+
 class ManifestList:
     def __init__(self, mediaplaylist, hlsdir, lstfile=None):
         self.mediaplaylist = mediaplaylist
@@ -62,7 +68,7 @@ class Manipulator:
     def _buildSegmentlist(self, segments):
         incue = False
         st = ''
-        for s in sorted(segments.keys()):
+        for s in sorted(segments.keys(), key=SEGMENTNO):
             seg = segments[s]
             if seg.scte35:
                 if not incue:
@@ -80,7 +86,7 @@ class Manipulator:
     def _buildSegmentlistCueout(self, segments):
         lastseqnum = 0
         st = ''
-        for s in sorted(segments.keys()):
+        for s in sorted(segments.keys(), key=SEGMENTNO):
             seg = segments[s]
             if not seg.cue_out:
                 res = re.match('.*/master\d+_(\d+).ts', seg.uri)
