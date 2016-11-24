@@ -11,8 +11,8 @@ import re
 def SEGMENTNO(uri):
     m = re.match('.*\D(\d+)\.ts$', uri)
     if m:
-        return m.group(1)
-    return uri
+        return int(m.group(1))
+    return 0
 
 class ManifestList:
     def __init__(self, mediaplaylist, hlsdir, lstfile=None):
