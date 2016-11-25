@@ -30,7 +30,10 @@ def main():
         raise Exception("Invalid out timestamp") 
     manifests = ManifestList(args.mediaplaylist, args.hlsdir, args.lstfile)
     manipulator = Manipulator(manifests)
-    print manipulator.vodFromLive(args.ints, args.outts, not args.noremovecueout, args.delay)
+    if args.delay:
+        print manipulator.vodFromLive(args.ints, args.outts, not args.noremovecueout, args.delay)
+    else:
+        print manipulator.vodFromLive(args.ints, args.outts, not args.noremovecueout)
     
 if __name__ == '__main__':
     try:
