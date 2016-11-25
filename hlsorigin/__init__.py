@@ -118,14 +118,15 @@ class Manipulator:
         s += self._buildPlaylist(playlistlist, False)
         return s
   
-    def vodFromLive(self, ints, outts, removecueout):
+    def vodFromLive(self, ints, outts, removecueout, delay=60):
         playlistlist = []
-        unixInTS = datetime.datetime.strptime(ints, "%Y-%m-%d %H:%M:%S").strftime("%s")
-        unixOutTS = datetime.datetime.strptime(outts, "%Y-%m-%d %H:%M:%S").strftime("%s")
+        unixInTS = int(datetime.datetime.strptime(ints, "%Y-%m-%d %H:%M:%S").strftime("%s"))
+        unixOutTS = int(datetime.datetime.strptime(outts, "%Y-%m-%d %H:%M:%S").strftime("%s"))
 
         for m in self.manifestlist.getSortedManifests():
             ts, filename = m
-            if ts >= unixInTS and ts <= unixOutTS:
+            if int(ts) >= unixInTS + delay and int(ts) <= unixOutTS + delay:
+                debug.log(datetime.datetime.fromtimestamp(float(ts)).strftime('%H:%M:%S'))
                 playlistlist.append(filename)
         s = ''
         s += "#EXTM3U\n"
