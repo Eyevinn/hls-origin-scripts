@@ -9,6 +9,11 @@ import m3u8
 import re
 
 def SEGMENTNO(uri):
+    n = re.match('^[0-9T]+-master\d+-(\d+)/(\d+).ts$', uri)
+    if n:
+        s = n.group(1).zfill(4) + n.group(2).zfill(4)
+        return int(s)
+
     m = re.match('.*\D(\d+)\.ts$', uri)
     if m:
         return int(m.group(1))
@@ -46,7 +51,7 @@ class ManifestList:
     def getSortedManifests(self):
         return sorted(self.getManifests())
 
-class Manipulator:
+class Manipulator:        
     def __init__(self, manifestlist):
         self.manifestlist = manifestlist
 
