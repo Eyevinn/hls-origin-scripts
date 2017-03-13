@@ -9,11 +9,19 @@ import m3u8
 import re
 
 def SEGMENTNO(uri):
+    # Envivio
     n = re.match('^[0-9T]+-master\d+-(\d+)/(\d+).ts$', uri)
     if n:
         s = n.group(1).zfill(4) + n.group(2).zfill(4)
         return int(s)
 
+    # Elemental
+    r = re.match('^\D+\d+/(\d+)/\D+\d+_(\d+).ts$', uri)
+    if r:
+        s = r.group(1).zfill(4) + r.group(2).zfill(4)
+        return int(s)
+
+    # Fallback
     m = re.match('.*\D(\d+)\.ts$', uri)
     if m:
         return int(m.group(1))

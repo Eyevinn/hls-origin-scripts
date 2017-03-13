@@ -37,3 +37,27 @@ class TestManifestList:
         assert sortedKeys == ['1738.ts', 
             '1739.ts',
             '1740.ts']
+
+    def test_seglist_sorting_four(self):
+        mockSegments = {}
+        mockSegments['master2372/00000/master2372_01771.ts'] = { 'uri': 'master2372/00000/master2372_01771.ts' }
+        mockSegments['master2372/00000/master2372_01772.ts'] = { 'uri': 'master2372/00000/master2372_01772.ts' }
+        mockSegments['master2372/00000/master2372_01773.ts'] = { 'uri': 'master2372/00000/master2372_01773.ts' }
+        sortedKeys = sorted(mockSegments.keys(), key=hlsorigin.SEGMENTNO)
+        for s in sortedKeys:
+            print s
+        assert sortedKeys == ['master2372/00000/master2372_01771.ts', 
+            'master2372/00000/master2372_01772.ts',
+            'master2372/00000/master2372_01773.ts']
+
+    def test_seglist_sorting_five(self):
+        mockSegments = {}
+        mockSegments['master2372/00002/master2372_01771.ts'] = { 'uri': 'master2372/00000/master2372_01771.ts' }
+        mockSegments['master2372/00001/master2372_01872.ts'] = { 'uri': 'master2372/00000/master2372_01772.ts' }
+        mockSegments['master2372/00001/master2372_01873.ts'] = { 'uri': 'master2372/00000/master2372_01773.ts' }
+        sortedKeys = sorted(mockSegments.keys(), key=hlsorigin.SEGMENTNO)
+        for s in sortedKeys:
+            print s
+        assert sortedKeys == ['master2372/00001/master2372_01872.ts', 
+            'master2372/00001/master2372_01873.ts',
+            'master2372/00002/master2372_01771.ts']
