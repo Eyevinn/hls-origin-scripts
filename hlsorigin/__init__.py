@@ -109,7 +109,7 @@ class Manipulator:
                     res2 = re.match('.*-master\d+-(\d+)/(\d+).ts', seg.uri)
                     if res2:
                         seqnum = int(res2.group(1).zfill(4)+res2.group(2).zfill(4))
-                if lastseqnum != 0 and lastseqnum != seqnum-1:
+                if lastseqnum != 0 and lastseqnum != seqnum-1 and (seqnum - lastseqnum) != 8001:
                     st += "#EXT-X-DISCONTINUITY\n"
                 st += "#EXTINF:%s\n" % seg.duration
                 st += "%s\n" % seg.uri
