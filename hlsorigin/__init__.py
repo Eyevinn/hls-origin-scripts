@@ -141,6 +141,9 @@ class Manipulator:
             if int(ts) >= unixInTS + delay and int(ts) <= unixOutTS + delay:
                 debug.log(datetime.datetime.fromtimestamp(float(ts)).strftime('%H:%M:%S'))
                 playlistlist.append(filename)
+        debug.log("Playlist list length %d" % len(playlistlist))
+        if len(playlistlist) == 0:
+            raise Exception('Specified interval rendered empty playlist')
         s = ''
         s += "#EXTM3U\n"
         s += "#EXT-X-PLAYLIST-TYPE:VOD\n"
